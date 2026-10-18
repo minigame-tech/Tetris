@@ -38,7 +38,9 @@ public sealed class BoardRenderer
         FloatingTextSystem floatingText,
         Vector2 screenShakeOffset,
         IReadOnlyList<int>? clearingLines,
-        float lineClearAnimTimer)
+        float lineClearAnimTimer,
+        UI.Button? pauseButton = null,
+        UI.Button? mainMenuButton = null)
     {
         // 1. Board Background card & glow
         int bx = BoardLeftX + (int)screenShakeOffset.X;
@@ -119,7 +121,7 @@ public sealed class BoardRenderer
         Raylib.DrawRectangleLinesEx(new Rectangle(bx - 2, by - 2, BoardWidth + 4, BoardHeight + 4), 2f, ColorPalette.BoardBorder);
 
         // 5. Left Card (Hold & Stats)
-        RenderLeftCard(LeftCardX, CardY, SideCardWidth, CardHeight, holdPiece, canHold, score, mode, gameTime);
+        RenderLeftCard(LeftCardX, CardY, SideCardWidth, CardHeight, holdPiece, canHold, score, mode, gameTime, pauseButton, mainMenuButton);
 
         // 6. Right Card (Next Queue & Scores)
         RenderRightCard(RightCardX, CardY, SideCardWidth, CardHeight, nextQueue, score, highScores, mode);
@@ -129,7 +131,7 @@ public sealed class BoardRenderer
         floatingText.Draw();
     }
 
-    private void RenderLeftCard(int x, int y, int width, int height, TetrominoType hold, bool canHold, ScoreManager score, GameMode mode, float gameTime)
+    private void RenderLeftCard(int x, int y, int width, int height, TetrominoType hold, bool canHold, ScoreManager score, GameMode mode, float gameTime, UI.Button? pauseBtn, UI.Button? menuBtn)
     {
         // Glass panel card
         Raylib.DrawRectangle(x, y, width, height, ColorPalette.CardBackground);
@@ -187,13 +189,16 @@ public sealed class BoardRenderer
         string timeStr = $"{minutes:00}:{seconds:00}.{hundredths:00}";
         Raylib.DrawText(timeStr, x + 20, curY, 20, ColorPalette.TextAccent);
 
-        // Controls reminder
-        curY = y + height - 100;
-        Raylib.DrawText("CONTROLS:", x + 20, curY, 12, ColorPalette.TextSecondary);
-        Raylib.DrawText("Arrows / WASD : Move/Rot", x + 20, curY + 18, 11, ColorPalette.TextSecondary);
-        Raylib.DrawText("Space : Hard Drop", x + 20, curY + 34, 11, ColorPalette.TextSecondary);
-        Raylib.DrawText("C / Shift : Hold", x + 20, curY + 50, 11, ColorPalette.TextSecondary);
-        Raylib.DrawText("Esc / P : Pause", x + 20, curY + 66, 11, ColorPalette.TextSecondary);
+        // Divider
+        Raylib.DrawLine(x + 15, y + 430, x + width - 15, y + 430, ColorPalette.CardBorder);
+
+        // Controls quick reference
+        Raylib.DrawText("Space: Drop | C: Hold", x + 20, y + 444, 11, ColorPalette.TextSecondary);
+        Raylib.DrawText("Esc / P: Quick Pause", x + 20, y + 462, 11, ColorPalette.TextSecondary);
+
+        // In-game Action Buttons
+        pauseBtn?.Draw();
+        menuBtn?.Draw();
     }
 
     private void RenderRightCard(int x, int y, int width, int height, IReadOnlyList<TetrominoType> nextQueue, ScoreManager score, HighScoreManager highScores, GameMode mode)

@@ -198,12 +198,14 @@ Tests executed: 18 | Passed: 18 | Failed: 0
 
 ---
 
-## 📄 Documentation
+## 📄 Documentation & Policies
 
-For deep technical insights, review the documentation directory:
+For deep technical insights and community standards, review:
 - [Architecture Overview](docs/ARCHITECTURE.md) - System diagrams, game loop, audio synthesis, and particle physics.
 - [SRS Specification](docs/SRS_SPECIFICATION.md) - Super Rotation System kick tables and 3-corner T-Spin geometry.
 - [Controls & DAS/ARR Guide](docs/CONTROLS.md) - Detailed input timings and competitive maneuver tips.
+- [Security Policy](SECURITY.md) - Vulnerability disclosure and threat mitigation.
+- [Code of Conduct](CODE_OF_CONDUCT.md) - Contributor standards and enforcement guidelines.
 
 ---
 

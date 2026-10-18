@@ -60,6 +60,10 @@ public sealed class Game : IDisposable
     private readonly PauseOverlay _pauseOverlay;
     private readonly GameOverOverlay _gameOverOverlay;
 
+    // In-game HUD buttons
+    private readonly Button _inGamePauseButton;
+    private readonly Button _inGameMainMenuButton;
+
     private bool _shouldQuit = false;
 
     public Game()
@@ -100,6 +104,20 @@ public sealed class Game : IDisposable
             onRetry: () => StartGame(_mode),
             onModes: () => _state = GameState.ModeSelect,
             onMainMenu: () => _state = GameState.MainMenu
+        );
+
+        _inGamePauseButton = new Button(
+            new Rectangle(280, 545, 160, 36),
+            "PAUSE",
+            () => _state = GameState.Paused,
+            16
+        );
+
+        _inGameMainMenuButton = new Button(
+            new Rectangle(280, 590, 160, 36),
+            "MAIN MENU",
+            () => _state = GameState.MainMenu,
+            16
         );
     }
 
@@ -205,8 +223,20 @@ public sealed class Game : IDisposable
 
     private void UpdatePlaying(float dt)
     {
+        var mousePos = Raylib.GetMousePosition();
+        bool mousePressed = Raylib.IsMouseButtonPressed(MouseButton.Left);
+
+        _inGamePauseButton.Update(mousePos, mousePressed, _audio);
+        _inGameMainMenuButton.Update(mousePos, mousePressed, _audio);
+
+        if (_state != GameState.Playing)
+        {
+            return;
+        }
+
         if (_input.ShouldPause())
         {
+            _audio.PlaySound(SoundEffectType.ButtonClick);
             _state = GameState.Paused;
             return;
         }
@@ -618,7 +648,9 @@ public sealed class Game : IDisposable
                     _floatingText,
                     shakeOffset,
                     _clearingLines,
-                    _lineClearTimer
+                    _lineClearTimer,
+                    _inGamePauseButton,
+                    _inGameMainMenuButton
                 );
 
                 if (_state == GameState.Paused)
