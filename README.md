@@ -4,7 +4,7 @@
 [![Raylib-cs](https://img.shields.io/badge/Raylib--cs-v8.1.0-red.svg?style=flat&logo=raylib)](https://github.com/ChrisDill/Raylib-cs)
 [![SRS Compliant](https://img.shields.io/badge/SRS-Tetris%20Guideline%20Compliant-00F0F0.svg?style=flat)](#super-rotation-system-srs)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows%20%7C%20macOS-brightgreen.svg)](#cross-platform-support)
+[![Platform](https://img.shields.io/badge/Platform-Linux%20%7C%20Windows-brightgreen.svg)](#cross-platform-support)
 
 **Tetris Neo** is an arcade-quality, modern Tetris clone built in **C# 12** and **.NET 8** leveraging the high-performance [Raylib-cs](https://github.com/ChrisDill/Raylib-cs) binding. Engineered to adhere strictly to the official **Tetris Guideline Standard**, it features tournament-grade **Super Rotation System (SRS)** wall kicks, the **7-bag randomizer**, high-precision **DAS/ARR** input polling, procedural real-time 16-bit audio synthesis, and modern visual polish including screen trauma physics, dynamic particle explosions, and glassmorphic UI panels.
 
